@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Date night picker</title>
+</head>
+<body>
+   <div class="container d-felx justify-content-center py-4">
+    <h1 style="text-align: center;">Date night picker</h1>
+   </div>
+   <div id="dropdown-list-container" class="container d-felx justify-content-center text-center py-4">
+    <ul class="list-inline">
+        <li class="list-inline-item px-4">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Kategorija
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="list-inline-item px-4">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Daljina
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="list-inline-item px-4">
+            <form>
+                <input class="from-control" type="datetime" placeholder="Koji dan">
+            </form>
+        </li>
+    </ul>
+   </div>
+   <div class="container d-felx justify-content-center text-center py-4" >
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="row">Header</th>
+                    <th scope="row">Header</th>
+                    <th scope="row">Header</th>
+                    <th scope="row">Header</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="col">1</th>
+                    <td>Podatak1</td>
+                    <td>Podatak1</td>
+                    <td>Podatak1</td>
+                </tr>
+                <tr>
+                    <th scope="col">2</th>
+                    <td>Podatak2</td>
+                    <td>Podatak2</td>
+                    <td>Podatak2</td>
+
+                </tr>
+                <tr>
+                    <th scope="col">3</th>
+                    <td>Podatak3</td>
+                    <td>Podatak3</td>
+                    <td>Podatak3</td>
+                    
+                </tr>
+            </tbody>
+        </table>
+   </div>
+</body>
+
+
+<script>
+    let config=
+    {
+        enableTime: true,
+        minTime: "09:00",
+        altInput: true,
+        dateFormat: "Y-m-d H:i",
+        altFormat: "F j, Y (H:i)"
+    }
+    flatpickr("input[type=datetime]",config) 
+</script>
+</html>
