@@ -8,23 +8,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
     <title>Date night picker</title>
 </head>
 <body>
    <div class="container d-felx justify-content-center py-4">
     <h1 style="text-align: center;">Date night picker</h1>
    </div>
-   <div id="dropdown-list-container" class="container d-felx justify-content-center text-center py-4">
+   <div id="dropdown-list-container" class="container d-felx justify-content-center text-center py-3">
     <ul class="list-inline">
         <li class="list-inline-item px-4">
             <div class="dropdown">
-                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Kategorija
+                <button id="kategorija" class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Kategorija
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="test(this)">Action</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="test(this)">Another action</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="test(this)">Something else here</a></li>
                 </ul>
             </div>
         </li>
@@ -41,45 +42,66 @@
             </div>
         </li>
         <li class="list-inline-item px-4">
-            <form>
-                <input class="from-control" type="datetime" placeholder="Koji dan">
-            </form>
+            <input type="text" class="form-control" id="" placeholder="Naziv">
+        </li>
+        <li class="list-inline-item px-4">
+            <button type="button" class="btn  btn-md  mt-2">Pretraži</button>
         </li>
     </ul>
    </div>
-   <div class="container d-felx justify-content-center text-center py-4" >
+   <div class="container d-felx justify-content-center text-center py-3" >
         <table class="table table-hover">
             <thead>
                 <tr>
+                    <th scope="row">#</th>
                     <th scope="row">Header</th>
                     <th scope="row">Header</th>
                     <th scope="row">Header</th>
-                    <th scope="row">Header</th>
+                    <th scope="row" id="btn-edit"></th>
+                    <th scope="row" id="btn-delete"></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
+            <tbody class="table-group-divider">
+                <tr class="table-active">
                     <th scope="col">1</th>
                     <td>Podatak1</td>
+                    <td>Podatak1</td>   
                     <td>Podatak1</td>
-                    <td>Podatak1</td>
+                    <td><button type="button" class="btn btn-warning">Edit</button></td>
+                    <td><button type="button" class="btn btn-danger">Delete</button></td>
                 </tr>
-                <tr>
+                <tr class="table-active">
                     <th scope="col">2</th>
                     <td>Podatak2</td>
                     <td>Podatak2</td>
                     <td>Podatak2</td>
-
+                    <td><button type="button" class="btn btn-warning">Edit</button></td>
+                    <td><button type="button" class="btn btn-danger">Delete</button></td>
                 </tr>
-                <tr>
+                <tr class="table-active">
                     <th scope="col">3</th>
                     <td>Podatak3</td>
                     <td>Podatak3</td>
                     <td>Podatak3</td>
-                    
+                    <td><button type="button" class="btn btn-warning">Edit</button></td>
+                    <td><button type="button" class="btn btn-danger">Delete</button></td>
                 </tr>
             </tbody>
         </table>
+   </div>
+   <div class="container d-felx justify-content-center pt-3">
+       <form>
+           <input class="from-control" type="datetime" placeholder="Koji dan">
+       </form>
+       <div class="input-group my-3">
+           <span class="input-group-text">To:</span>
+           <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="email@gmail.com">
+       </div>
+        <div class="input-group mt-3">
+            <span class="input-group-text">Email Body:</span>
+            <textarea id="email-body" class="form-control" aria-label="With textarea"></textarea>
+        </div>
+        <button type="button" class="btn btn-success  btn-md   mb-3 mt-2">Pošalji</button>
    </div>
 </body>
 
