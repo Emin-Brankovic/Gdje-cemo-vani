@@ -1,13 +1,13 @@
 export const KATEGORIJE={
     JESTI:"Jedemo",
-    PITI:"Piti",
+    PITI:"Pijemo",
     MIX:"Mix",
     SETNJA:"Šetnja",
     KAFA:" 'Kafa' "
 };
 
 export const DALJINA={
-    DALEKO:"daleko",
-    SREDNJA_ZALOST:"srednja žalost",
-    BLIZU:"blizu"
+    DALEKO:"Daleko",
+    SREDNJA_ZALOST:"Srednja žalost",
+    BLIZU:"Blizu"
 };
