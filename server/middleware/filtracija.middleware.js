@@ -2,18 +2,15 @@ import Mjesto from "../model/Mjesto.model.js";
 
 export const getByKategorijaDaljina= async (req,res,next)=>{
     const {kategorija,daljina}=req.query;
-
-    if(typeof kategorija !=='undefined'){
+    if(kategorija.length===0){
         next();
     }
-   else if(typeof daljina !=='undefined'){
+   else if(daljina.length===0){
          next();
      }
     else{
         let mjesta = [];
         try {
-          //let query = Mjesto.find({ kategorija: kategorija, daljina: daljina });
-          //mjesta = await query.exec();
           mjesta= await Mjesto.find({ kategorija: kategorija, daljina: daljina });
           res.send(mjesta);
         } catch (error) {
@@ -25,7 +22,7 @@ export const getByKategorijaDaljina= async (req,res,next)=>{
 
 export const getByKategorij= async (req,res,next)=>{
   const {kategorija}=req.query;
-  if(typeof kategorija ==='undefined'){
+  if(kategorija.length===0){
     next();
   }
   else{
@@ -41,7 +38,6 @@ export const getByKategorij= async (req,res,next)=>{
 }
 export const getByDaljina= async (req,res)=>{
   const {daljina}=req.query;
-  console.log(daljina);
    let mjesta = [];
   try {
        mjesta= await Mjesto.find({ daljina: daljina});
