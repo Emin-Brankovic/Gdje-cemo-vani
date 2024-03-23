@@ -3,7 +3,7 @@ import Mjesto from "../model/Mjesto.model.js";
 
 export const getAllMjesta=async(req,res,next)=>
 {
-    const {kategorija,daljina}=req.query;
+    const {kategorija,daljina,}=req.query;
     // if( typeof kategorija !=='undefined' || typeof daljina !=='undefined' ){
     //     next();
     // }
@@ -59,13 +59,12 @@ export const updateMjesto=async(req,res)=>{
 }
 
 export const deleteMjesto=async(req,res)=>{
-    const mjestoToSave=req.body;
-    const id=mjestoToSave._id;
-    try {
-        const result=await Mjesto.deleteOne({_id:id});
-        res.status(200).send("Mjesto izbrisano")
-    } 
-    catch (error) {
+    const mjestoID=req.params.idMjesta;
+     try {
+         const result=await Mjesto.deleteOne({_id:mjestoID});
+         res.status(200).send(result)
+     } 
+     catch (error) {
         res.status(404).send(error);    
-    }
+     }
 }

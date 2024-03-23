@@ -23,6 +23,6 @@ router.get(
 router.get("/:naziv", getMjestoByName);
 router.post("/create", createMjesto);
 router.put("/update", updateMjesto);
-router.delete("/delete",deleteMjesto)
+router.delete("/delete/:idMjesta",deleteMjesto)
 
 export default router;
