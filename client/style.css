@@ -7,3 +7,23 @@
 {
     width: 60px;
 }
+.labele-filtera{
+    font-weight: bolder;
+}
+#body{
+    background-color:#ABB6C8;
+}
+
+#tabela-podataka{
+    border-collapse: collapse; /* Ensure consistent border styling */
+    border-radius: 10px; /* Adjust the value to change the roundness */
+    overflow: hidden; /* Clip the rounded corners */
+}
+
+#filteri{
+    background-color:#DADADA ;
+    list-style: none; /* Remove default bullet points */
+    padding: 0; /* Remove default padding */
+    border-radius: 10px; /* Adjust the value to change the roundness */
+    overflow: hidden; /* Clip the rounded corners */
+}
