@@ -113,7 +113,9 @@
         </div>
         <button type="button" class="btn btn-success  btn-md   mb-3 mt-2">Pošalji</button>
    </div>
-<!-- Modal -->
+
+
+<!-- Modal Dodaj/Update -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" onload="Ucitavanje()">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -125,15 +127,14 @@
         </div>
         <div class="modal-body">
             <div class="input-group my-3">
-                <span id="naziv-modal" class="input-group-text">Naziv:</span>
+                <span class="input-group-text naziv-modal">Naziv:</span>
                 <input type="text" class="form-control input-naziva-modal" id="basic-url" aria-describedby="basic-addon3">
             </div>
             <div class="container d-felx justify-content-center text-center">
-
                 <ul class="list-inline">
                     <li class="list-inline-item px-3">
                         <div class="dropdown">
-                            <button id="daljina-modal" class="btn dropdown-toggle btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Daljina</button>
+                            <button class="btn dropdown-toggle btn-secondary daljina-modal" type="button" data-bs-toggle="dropdown" aria-expanded="false">Daljina</button>
                             <ul class="dropdown-menu dropdown-menu-daljina">
                                 <li><a class="dropdown-item" href="#">Action</a></li>
                                 <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -143,11 +144,11 @@
                     </li>
                     <li class="list-inline-item px-3">
                         <div class="dropdown">
-                            <button id="kategorija-modal" class="btn dropdown-toggle btn-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">Kategorija:</button>
+                            <button class="btn dropdown-toggle btn-secondary kategorija-modal" type="button" data-bs-toggle="dropdown" aria-expanded="false">Kategorija:</button>
                             <ul id="dropdown-menu-kategorija" class="dropdown-menu dropdown-menu-kategorija">
-                                <li><a class="dropdown-item" href="#" onclick="test(this)">Action</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="test(this)">Another action</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="test(this)">Something else here</a></li>
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
                         </div>
                     </li>
@@ -168,19 +169,20 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="UcitajMjesta()">Close</button>
-          <button type="button" class="btn btn-primary "onclick="DodajMjesto()">Save changes</button>
+          <button type="button" class="btn btn-primary "onclick="Spasi()">Save changes</button>
         </div>
       </div>
     </div>
   </div>
 
 
+  <!-- Modal Upozorenje Brisanja -->
   <div class="modal fade bd-example-modal-sm provjera-brisanja-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
       <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">Upozorenje!</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
                 <span aria-hidden="true">x</span>
             </button>
         </div>
@@ -192,7 +194,6 @@
       </div>
     </div>
   </div>
-
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

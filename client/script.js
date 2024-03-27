@@ -1,5 +1,5 @@
-let data;
-let clickedRowData;
+let data=[];
+let clickedRowData=null;
 
 const PrikaziKategoriju=(dropdownItem)=>{
     let dugme=document.getElementById("kategorija");
@@ -10,11 +10,11 @@ const PrikaziKategoriju=(dropdownItem)=>{
     dugme.textContent=dropdownItem.textContent;
 }
 const PrikaziDaljinuModal=(dropdownItem)=>{
-    let dugme=document.getElementById("daljina-modal");
+    let dugme=document.querySelector(".daljina-modal");
     dugme.textContent=dropdownItem.textContent;
 }
 const PrikaziKategorijuModal=(dropdownItem)=>{
-    let dugme=document.getElementById("kategorija-modal");
+    let dugme=document.querySelector(".kategorija-modal");
     dugme.textContent=dropdownItem.textContent;
 }
 
@@ -53,7 +53,6 @@ const UcitajMjesta=async()=>{
 const UcitajMail=(red)=>{
     let emailBody=document.getElementById("email-body");
     let podaci=red.children;
-    clickedRowData=red.children;
     let email=`Gdje=${podaci[1].textContent},
     Kategorija=${podaci[2].textContent},
     Daljina=${podaci[3].textContent},
@@ -69,21 +68,12 @@ const DodajDatum=()=>{
     emailBody.value+=tekst;
 }
 
-const UcitajPodatkeZaEdit=async(dugme)=>{
-    let td=document.getElementById(dugme.id).parentElement;
-    let red=td.parentElement;
-    clickedRowData=td.parentElement;
-    let redniBroj=red.children[0].innerHTML-1
-    document.querySelector(".input-naziva-modal").value=data[redniBroj].naziv;
-    document.getElementById("daljina-modal").textContent=data[redniBroj].daljina;
-    document.getElementById("kategorija-modal").textContent=data[redniBroj].kategorija;
-}
 
 const DodajMjesto=async ()=>{
     const rating=parseInt(document.getElementById("rating").textContent);
     let nizRatinga=[rating];
-    const daljina=document.getElementById("daljina-modal");
-    const kategorija=document.getElementById("kategorija-modal");
+    const daljina=document.querySelector(".daljina-modal");
+    const kategorija=document.querySelector(".kategorija-modal");
     const naziv=document.querySelector(".input-naziva-modal").value;
     console.log(naziv);
     const mjestoToSave={
@@ -110,23 +100,61 @@ const DodajMjesto=async ()=>{
     }
 }
 
-const UpdateMjesto=async(dugme)=>{
-   // let td=document.getElementById(dugme.id).parentElement;
+const UcitajPodatkeZaEdit=async(dugme)=>{
+    let td=document.getElementById(dugme.id).parentElement;
     //let red=td.parentElement;
-    let redniBroj=clickedRowData[0].innerHTML-1;
-    const naziv=document.querySelector(".input-naziva-modal").value
-    const daljina=document.getElementById("daljina-modal").textContent
-    const kategorija=document.getElementById("kategorija-modal").textContent
+    clickedRowData=td.parentElement;
+    let redniBroj=clickedRowData.children[0].innerHTML-1
+    document.querySelector(".input-naziva-modal").value=data[redniBroj].naziv;
+    document.querySelector(".daljina-modal").textContent=data[redniBroj].daljina;
+    document.querySelector(".kategorija-modal").textContent=data[redniBroj].kategorija;
+    document.getElementById("rating").textContent='Rating';
+}
+const UpdateMjesto=async()=>{
+    let redniBroj=clickedRowData.children[0].innerHTML-1;
     let mjesto=data[redniBroj];
-    console.log(mjesto);
+    let nizRatingaMjesta=mjesto.rating;
+    
+    const naziv=document.querySelector(".input-naziva-modal").value
+    const daljina=document.querySelector(".daljina-modal").textContent
+    const kategorija=document.querySelector(".kategorija-modal").textContent
+    const rating=parseInt(document.getElementById("rating").textContent);
+
+    if(!isNaN(rating))
+        nizRatingaMjesta.push(rating);
+
+    const mjestoZaUpdate={
+        _id:mjesto._id,
+        naziv: naziv,
+        kategorija: kategorija,
+        daljina: daljina,
+        rating:nizRatingaMjesta
+    };
+    console.log(nizRatingaMjesta);
+    const url=`http://localhost:3001/mjesto/update`;
+    const config={
+        method:'PUT',
+        body: JSON.stringify(mjestoZaUpdate),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+    try {
+        const res=await fetch(url,config);
+        const responseData = await res.text();
+        console.log(responseData);
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+    clickedRowData=null;
 }
 
 
 const DeleteMjesto=async ()=>{ 
-    console.log(clickedRowData[0].innerHTML);
-    let redniBroj=clickedRowData[0].innerHTML-1;
+    let redniBroj=clickedRowData.children[0].innerHTML-1;
     let IDMjesta=data[redniBroj]._id;
-    
     const url=`http://localhost:3001/mjesto/delete/${IDMjesta}`;
     const config={
         method:'DELETE',
@@ -142,6 +170,7 @@ const DeleteMjesto=async ()=>{
     } catch (error) {
         console.log(error);
     }
+    clickedRowData=null;
 }
 
 const AverageRating=(niz)=>{
@@ -269,11 +298,23 @@ const Pretraga=()=>{
 
 const OcistiModal=()=>{
     document.querySelector(".input-naziva-modal").value="";
-    document.getElementById("daljina-modal").textContent="Daljina";
-    document.getElementById("kategorija-modal").textContent="Kategorija";
+    document.querySelector(".daljina-modal").textContent="Daljina";
+    document.querySelector(".kategorija-modal").textContent="Kategorija";
 }
 
 const SpremiPodatkeZaDelete=(dugme)=>{
     let td=document.getElementById(dugme.id).parentElement; 
     clickedRowData=td.parentElement;
+}
+
+const Spasi=()=>
+{
+    if(clickedRowData===null){
+        DodajMjesto();
+        console.log("Dodaj mjesto");
+    }
+    else{
+       UpdateMjesto();
+       console.log("Update mjesto");
+    }
 }
