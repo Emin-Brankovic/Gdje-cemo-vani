@@ -1,29 +1,6 @@
 let data=[];
 let clickedRowData=null;
 
-const PrikaziKategoriju=(dropdownItem)=>{
-    let dugme=document.getElementById("kategorija");
-    dugme.textContent=dropdownItem.textContent;
-}
- const PrikaziDaljinu=(dropdownItem)=>{
-    let dugme=document.getElementById("daljina");
-    dugme.textContent=dropdownItem.textContent;
-}
-const PrikaziDaljinuModal=(dropdownItem)=>{
-    let dugme=document.querySelector(".daljina-modal");
-    dugme.textContent=dropdownItem.textContent;
-}
-const PrikaziKategorijuModal=(dropdownItem)=>{
-    let dugme=document.querySelector(".kategorija-modal");
-    dugme.textContent=dropdownItem.textContent;
-}
-
-const PrikaziRatingModal=(dropdownItem)=>{
-    let dugme=document.getElementById("rating");
-    dugme.textContent=dropdownItem.textContent;
-}
-
-
 const UcitajMjesta=async()=>{
     let url=`http://localhost:3001/mjesto?daljina=&kategorija=`;
     let tabela=document.getElementById("tabela-mjesta");
@@ -56,9 +33,9 @@ const UcitajMail=(red)=>{
     let email=`Gdje=${podaci[1].textContent},
     Kategorija=${podaci[2].textContent},
     Daljina=${podaci[3].textContent},
-    Koliko valja=${podaci[4].textContent}
-    `;
+    Koliko valja=${podaci[4].textContent}`;
     emailBody.value+=email;
+
 }
 
 const DodajDatum=()=>{
@@ -102,7 +79,6 @@ const DodajMjesto=async ()=>{
 
 const UcitajPodatkeZaEdit=async(dugme)=>{
     let td=document.getElementById(dugme.id).parentElement;
-    //let red=td.parentElement;
     clickedRowData=td.parentElement;
     let redniBroj=clickedRowData.children[0].innerHTML-1
     document.querySelector(".input-naziva-modal").value=data[redniBroj].naziv;
@@ -110,6 +86,12 @@ const UcitajPodatkeZaEdit=async(dugme)=>{
     document.querySelector(".kategorija-modal").textContent=data[redniBroj].kategorija;
     document.getElementById("rating").textContent='Rating';
 }
+
+
+
+
+
+
 const UpdateMjesto=async()=>{
     let redniBroj=clickedRowData.children[0].innerHTML-1;
     let mjesto=data[redniBroj];
@@ -211,57 +193,6 @@ const Pretrazi=async ()=>{
     }
 }
 
-const UcitajFiltere=()=>{
-    let kategorije=["Jedemo","Pijemo","Mix","Šetnja"," 'Kafa' "]
-    let daljina=["Daleko","Srednja žalost","Blizu"]
-    let menuKategorija=document.querySelectorAll(".dropdown-menu-kategorija");
-    let menuDaljina=document.querySelectorAll(".dropdown-menu-daljina");
-    let emptyString = "";
-    menuKategorija.innerHTML=" ";
-    for(let i=0;i<menuDaljina.length;i++){
-        menuDaljina[i].innerHTML=" ";
-    }
-    for(let i=0;i<menuDaljina.length;i++){
-        menuKategorija[i].innerHTML=" ";
-    }
-
-    for(let i=0;i<kategorije.length;i++){
-        for (let j = 0; j < menuKategorija.length; j++) {
-            if(j===0){
-                menuKategorija[j].innerHTML+=`
-                <li><a class="dropdown-item" href="#" onclick="PrikaziKategoriju(this)">${kategorije[i]}</a></li>
-                `
-            }
-            else{
-                menuKategorija[j].innerHTML+=`
-                <li><a class="dropdown-item" href="#" onclick="PrikaziKategorijuModal(this)">${kategorije[i]}</a></li>
-                `
-            }
-        }
-    }
-   
-
-    daljina.forEach(element => {
-        for(let i=0;i<menuDaljina.length;i++){
-            if(i===0){
-                menuDaljina[i].innerHTML+=`
-                <li><a class="dropdown-item" href="#" onclick="PrikaziDaljinu(this)">${element}</a></li>
-                `
-            }
-            else{
-                menuDaljina[i].innerHTML+=`
-                <li><a class="dropdown-item" href="#" onclick="PrikaziDaljinuModal(this)">${element}</a></li>
-                `
-            }
-        }
-    });
-    menuKategorija[0].innerHTML+=`
-    <li><a class="dropdown-item" href="#" onclick="PrikaziKategoriju(this)">${emptyString}</a></li>
-    `
-    menuDaljina[0].innerHTML+=`
-        <li><a class="dropdown-item" href="#" onclick="PrikaziDaljinu(this)">${emptyString}</a></li>
-        `
-}
 
 
 const PretraziPoNazivu=async (naziv)=>{
