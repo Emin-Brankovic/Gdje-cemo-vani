@@ -87,7 +87,18 @@ const UcitajPodatkeZaEdit=async(dugme)=>{
     document.getElementById("rating").textContent='Rating';
 }
 
-
+const closeModal=()=> {
+    let modal = document.getElementById('editModal');
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+    modal.setAttribute('style', 'display: none');
+    var modalBackdrop = document.getElementsByClassName('modal-backdrop');
+    // Remove the backdrop
+    document.body.removeChild(modalBackdrop[0]);
+    // Reset the modal content
+    modal.innerHTML = '';
+    UcitajMjesta();
+}
 
 
 
@@ -131,6 +142,7 @@ const UpdateMjesto=async()=>{
     }
 
     clickedRowData=null;
+    closeModal();
 }
 
 
