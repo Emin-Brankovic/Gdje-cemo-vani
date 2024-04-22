@@ -1,9 +1,7 @@
 export const KATEGORIJE={
     JESTI:"Jedemo",
     PITI:"Pijemo",
-    MIX:"Mix",
-    SETNJA:"Šetnja",
-    KAFA:" 'Kafa' "
+    MIX:"Mix"
 };
 
 export const DALJINA={
