@@ -26,12 +26,28 @@ export const getAllMjesta=async(req,res,next)=>
 
 export const getMjestoByName=async(req,res)=>{
     const nazivMjesta=req.params.naziv;
-    try {
-        const mjesto=await Mjesto.findOne({naziv:nazivMjesta})
-        res.status(200).send(mjesto);
-    } catch (error) {
-        res.status(404).send("Mjesto not found");
+    let filter=new RegExp(nazivMjesta,'i');
+    let query={
+        $or:[
+            {naziv:filter},
+            {naziv:" "}
+        ]
+    };
+
+    try{
+        const mjesta=await Mjesto.find(query);
+        res.status(200).send(mjesta);
     }
+    catch (error) {
+             res.status(404).send("Mjesto not found");
+        }
+
+    // try {
+    //     const mjesto=await Mjesto.find({naziv:nazivMjesta})
+    //     res.status(200).send(mjesto);
+    // } catch (error) {
+    //     res.status(404).send("Mjesto not found");
+    // }
 }
 
 export const createMjesto=async(req,res)=>{
