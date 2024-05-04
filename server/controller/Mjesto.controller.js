@@ -42,12 +42,6 @@ export const getMjestoByName=async(req,res)=>{
              res.status(404).send("Mjesto not found");
         }
 
-    // try {
-    //     const mjesto=await Mjesto.find({naziv:nazivMjesta})
-    //     res.status(200).send(mjesto);
-    // } catch (error) {
-    //     res.status(404).send("Mjesto not found");
-    // }
 }
 
 export const createMjesto=async(req,res)=>{

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
     <script src="Ucitavanja.js"></script>
+    <script src="EmailServis.js "></script>
 
     <title>Gdje cemo vani</title>
 </head>
@@ -102,17 +103,22 @@
 
    <div class="container d-felx justify-content-center pt-3">
        <form>
-           <input id="dan-izlaska" class="from-control" type="datetime" placeholder="Koji dan" onchange="DodajDatum()">
+           <input id="dan-izlaska" class="from-control" type="datetime" placeholder="Koji dan">
        </form>
        <div class="input-group my-3">
            <span class="input-group-text">To:</span>
-           <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" placeholder="email@gmail.com">
+           <input type="text" class="form-control" id="to-email" aria-describedby="basic-addon3" placeholder="email@gmail.com" onfocus="DodajDatum()" onchange="ValidacijaEmail()">
        </div>
+       <div class="input-group my-3">
+        <span class="input-group-text">From:</span>
+        <input type="text" class="form-control" id="from-ime" aria-describedby="basic-addon3" placeholder="Ime svoje">
+    </div>
         <div class="input-group mt-3">
             <span class="input-group-text">Email Body:</span>
-            <textarea id="email-body" class="form-control" aria-label="With textarea"></textarea>
+            <textarea id="email-body" rows="4" class="form-control" aria-label="With textarea">
+            </textarea>
         </div>
-        <button type="button" class="btn btn-success  btn-md   mb-3 mt-2">Pošalji</button>
+        <button type="button" class="btn btn-success  btn-md mb-3 mt-2" onclick="PosaljiEmail()">Pošalji</button>
    </div>
 
 
@@ -122,9 +128,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Dodaj mjesto</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="UcitajMjesta()">
-            <span aria-hidden="true">&times;</span>
-          </button>
         </div>
         <div class="modal-body">
             <div class="input-group my-3">
@@ -169,7 +172,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="UcitajMjesta()">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="CiscenjePoruke()">Close</button>
           <button type="button" class="btn btn-primary "onclick="Spasi()">Save changes</button>
         </div>
       </div>
@@ -183,14 +186,14 @@
       <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">Upozorenje!</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"  onclick="CiscenjePoruke()">
                 <span aria-hidden="true">x</span>
             </button>
         </div>
         <div class="modal-body">Jeste li sigurno oko brisanja mjesta</div>
         <div class="modal-footer">
             <button type="button" class="btn btn-primary px-4 close" data-dismiss="modal" aria-label="Close" onclick="DeleteMjesto()">DA</button>
-            <button type="button" class="btn btn-secondary px-4" data-dismiss="modal">NE</button>
+            <button type="button" class="btn btn-secondary px-4" data-dismiss="modal" onclick="CiscenjePoruke()">NE</button>
           </div>
       </div>
     </div>
@@ -213,4 +216,17 @@
     }
     flatpickr("input[type=datetime]",config) 
 </script>
+
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+
+<script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "twvbg0nIbc3NTZIeM",
+      });
+   })();
+</script>
+
 </html>

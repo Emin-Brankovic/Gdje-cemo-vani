@@ -6,6 +6,6 @@ export const KATEGORIJE={
 
 export const DALJINA={
     DALEKO:"Daleko",
-    SREDNJA_ZALOST:"Srednja žalost",
+    SREDNJA_ZALOST:"Srednje",
     BLIZU:"Blizu"
 };

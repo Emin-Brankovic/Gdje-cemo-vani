@@ -22,8 +22,8 @@ const PrikaziRatingModal=(dropdownItem)=>{
 
 
 const UcitajFiltere=()=>{
-    let kategorije=["Jedemo","Pijemo","Mix","Šetnja"," 'Kafa' "]
-    let daljina=["Daleko","Srednja žalost","Blizu"]
+    let kategorije=["Jedemo","Pijemo","Mix"]
+    let daljina=["Daleko","Srednje","Blizu"]
     let menuKategorija=document.querySelectorAll(".dropdown-menu-kategorija");
     let menuDaljina=document.querySelectorAll(".dropdown-menu-daljina");
     let emptyString = "";
@@ -71,4 +71,16 @@ const UcitajFiltere=()=>{
     menuDaljina[0].innerHTML+=`
         <li><a class="dropdown-item" href="#" onclick="PrikaziDaljinu(this)">${emptyString}</a></li>
         `
+}
+
+const CiscenjePoruke=()=>{
+    let emailBody=document.getElementById("email-body");
+    emailBody.value=" ";
+}
+
+const OcistiModal=()=>{
+    document.querySelector(".input-naziva-modal").value="";
+    document.querySelector(".daljina-modal").textContent="Daljina";
+    document.querySelector(".kategorija-modal").textContent="Kategorija";
+    document.getElementById("rating").textContent="Rating";
 }

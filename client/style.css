@@ -11,16 +11,16 @@
     font-weight: bolder;
 }
 #body{
-    background-color:#ABB6C8;
+    /*background-color:#ABB6C8;*/
+    background-color: #F5EFE6;
 }
 
-/* #dropdown-list-container{
+ #dropdown-list-container{
     width: 1000px;
     height: 100px;
     position: relative;
-    z-index: 1;
-} */
-/* #dropdown-menu-kategorija{
+} 
+ /*#dropdown-menu-kategorija{
     position: absolute; 
     top: 50px;
     left: 50px;
@@ -36,16 +36,29 @@
     overflow: hidden; /* Clip the rounded corners */
 }
 
-/* #filteri{
-    background-color:#DADADA ;
+ #filteri{
+    background-color:#E8DFCA ;
     list-style: none; 
+    border-radius: 10px;
     padding: 0; 
-    border-radius: 10px; 
-    overflow: hidden; 
-} */
+} 
 #pretrazi-dugme{
    
     background-color: aliceblue;
 }
 
-
+#tabela-mjesta{
+    background-color: #CEDEBD;
+}
+.edit-dugme{
+    background-color: #E8C872;
+}
+.edit-dugme:hover{
+    background-color: #E8C872;
+}
+.delete-dugme{
+    background-color: #FA7070;
+}
+.delete-dugme:hover{
+    background-color: #FA7070;
+}
