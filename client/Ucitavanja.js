@@ -15,11 +15,6 @@ const PrikaziKategorijuModal=(dropdownItem)=>{
     dugme.textContent=dropdownItem.textContent;
 }
 
-const PrikaziRatingModal=(dropdownItem)=>{
-    let dugme=document.getElementById("rating");
-    dugme.textContent=dropdownItem.textContent;
-}
-
 
 const UcitajFiltere=()=>{
     let kategorije=["Jedemo","Pijemo","Mix"]
@@ -82,5 +77,4 @@ const OcistiModal=()=>{
     document.querySelector(".input-naziva-modal").value="";
     document.querySelector(".daljina-modal").textContent="Daljina";
     document.querySelector(".kategorija-modal").textContent="Kategorija";
-    document.getElementById("rating").textContent="Rating";
 }

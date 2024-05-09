@@ -5,8 +5,7 @@ const {Schema}=mongoose;
 const MjestoSchema=new Schema({
     naziv:String,
     kategorija:String,
-    daljina:String,
-    rating:[{type:Number}]
+    daljina:String
 });
 
 const Mjesto=mongoose.model("mjesto",MjestoSchema);
