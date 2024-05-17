@@ -17,6 +17,7 @@ const UcitajMjesta=async()=>{
             <td>${data[i].naziv}</td>
             <td>${data[i].kategorija}</td>   
             <td>${data[i].daljina}</td>
+            <td>${AverageRating(data[i].rating)}</td>
             <td><button id="edit-button-${i+1}" type="button" class="btn edit-dugme" data-toggle="modal" data-target="#editModal" onclick="UcitajPodatkeZaEdit(this)">Edit</button></td>
             <td><button id="delete-button-${i+1}" type="button" class="btn delete-dugme"  data-toggle="modal" data-target=".provjera-brisanja-modal" onclick="SpremiPodatkeZaDelete(this)">Delete</button></td>
             </tr>
@@ -30,11 +31,12 @@ const UcitajMjesta=async()=>{
 const UcitajMail=(red)=>{
     let emailBody=document.getElementById("email-body");
     let podaci=red.children;
-    let email=
-`Gdje=${podaci[1].textContent},
-Kategorija=${podaci[2].textContent},
-Daljina=${podaci[3].textContent}\n`;
+    let email=`Gdje=${podaci[1].textContent},
+    Kategorija=${podaci[2].textContent},
+    Daljina=${podaci[3].textContent},
+    Koliko valja=${podaci[4].textContent}`;
     emailBody.value+=email;
+
 }
 
 const DodajDatum=()=>{
@@ -43,7 +45,7 @@ const DodajDatum=()=>{
         return
     else if(odabraniDatum===datum)
         return;
-    let tekst=`Kada: ${odabraniDatum}\n`;
+    let tekst=`Kada: ${odabraniDatum}`;
     let emailBody=document.getElementById("email-body");
     emailBody.value+=tekst;
     datum=odabraniDatum;
@@ -51,13 +53,18 @@ const DodajDatum=()=>{
 
 
 const DodajMjesto=async ()=>{
+    const rating=parseInt(document.getElementById("rating").textContent);
+    let nizRatinga=[rating];
+    console.log(nizRatinga);
     const daljina=document.querySelector(".daljina-modal");
     const kategorija=document.querySelector(".kategorija-modal");
     const naziv=document.querySelector(".input-naziva-modal").value;
+    console.log(naziv);
     const mjestoToSave={
         naziv:naziv,
         kategorija:kategorija.textContent,
-        daljina:daljina.textContent
+        daljina:daljina.textContent,
+        rating:nizRatinga
     };
     const mjestoJSON = JSON.stringify(mjestoToSave);
     const url=`http://localhost:3001/mjesto/create`;
@@ -84,6 +91,7 @@ const UcitajPodatkeZaEdit=async(dugme)=>{
     document.querySelector(".input-naziva-modal").value=data[redniBroj].naziv;
     document.querySelector(".daljina-modal").textContent=data[redniBroj].daljina;
     document.querySelector(".kategorija-modal").textContent=data[redniBroj].kategorija;
+    document.getElementById("rating").textContent='Rating';
 }
 
 const closeModal=()=> {
@@ -104,18 +112,25 @@ const closeModal=()=> {
 const UpdateMjesto=async()=>{
     let redniBroj=clickedRowData.children[0].innerHTML-1;
     let mjesto=data[redniBroj];
+    let nizRatingaMjesta=mjesto.rating;
     let emailBody=document.getElementById("email-body");
 
     const naziv=document.querySelector(".input-naziva-modal").value
     const daljina=document.querySelector(".daljina-modal").textContent
     const kategorija=document.querySelector(".kategorija-modal").textContent
+    const rating=parseInt(document.getElementById("rating").textContent);
+
+    if(!isNaN(rating))
+        nizRatingaMjesta.push(rating);
 
     const mjestoZaUpdate={
         _id:mjesto._id,
         naziv: naziv,
         kategorija: kategorija,
         daljina: daljina,
+        rating:nizRatingaMjesta
     };
+    console.log(nizRatingaMjesta);
     const url=`http://localhost:3001/mjesto/update`;
     const config={
         method:'PUT',
@@ -166,6 +181,17 @@ const DeleteMjesto=async ()=>{
     emailBody.value=" ";
 }
 
+const AverageRating=(niz)=>{
+    let zbir=0;
+    let prosjek;
+    for (let index = 0; index < niz.length; index++) {
+        zbir += niz[index];
+    }
+    console.log(zbir);    
+    prosjek=zbir/ niz.length;
+    return prosjek.toFixed(1);
+}
+
 const Pretrazi=async ()=>{
     let tabela=document.getElementById("tabela-mjesta");
     let kategorija=document.getElementById("kategorija");
@@ -178,13 +204,14 @@ const Pretrazi=async ()=>{
         tabela.innerHTML=" ";
         for(let i=0;i<data.length;i++){
             tabela.innerHTML+=`
-            <tr id="red-tabele" class="table-active" onclick="UcitajMail(this)">
-            <th id="redni-br" scope="col">${i+1}</th>
-            <td>${data[i].naziv}</td>
-            <td>${data[i].kategorija}</td>   
-            <td>${data[i].daljina}</td>
-            <td><button id="edit-button-${i+1}" type="button" class="btn edit-dugme" data-toggle="modal" data-target="#editModal" onclick="UcitajPodatkeZaEdit(this)">Edit</button></td>
-            <td><button id="delete-button-${i+1}" type="button" class="btn delete-dugme"  data-toggle="modal" data-target=".provjera-brisanja-modal" onclick="SpremiPodatkeZaDelete(this)">Delete</button></td>
+            <tr class="table-active" onclick="UcitajMail(this)">
+                <th id="redni-br" scope="col">${i+1}</th>
+                <td>${data[i].naziv}</td>
+                <td>${data[i].kategorija}</td>   
+                <td>${data[i].daljina}</td>
+                <td>${AverageRating(data[i].rating)}</td>
+                <td><button id="edit-button-${i+1}" type="button" class="btn edit-dugme" data-toggle="modal" data-target="#editModal" onclick="UcitajPodatkeZaEdit(this)">Edit</button></td>
+                <td><button id="delete-button-${i+1}" type="button" class="btn delete-dugme"  data-toggle="modal" data-target=".provjera-brisanja-modal" onclick="SpremiPodatkeZaDelete(this)">Delete</button></td>
             </tr>
             `
         }
@@ -211,6 +238,7 @@ const PretraziPoNazivu=async (naziv)=>{
             <td>${data[i].naziv}</td>
             <td>${data[i].kategorija}</td>   
             <td>${data[i].daljina}</td>
+            <td>${AverageRating(data[i].rating)}</td>
             <td><button id="edit-button-${i+1}" type="button" class="btn edit-dugme" data-toggle="modal" data-target="#editModal" onclick="UcitajPodatkeZaEdit(this)">Edit</button></td>
             <td><button id="delete-button-${i+1}" type="button" class="btn delete-dugme"  data-toggle="modal" data-target=".provjera-brisanja-modal" onclick="SpremiPodatkeZaDelete(this)">Delete</button></td>
             </tr>

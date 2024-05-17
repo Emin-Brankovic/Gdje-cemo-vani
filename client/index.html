@@ -56,6 +56,7 @@
                     <th scope="row">Naziv</th>
                     <th scope="row">Kategorija</th>
                     <th scope="row">Daljina</th>
+                    <th scope="row">Rating</th>
                     <th scope="row" id="btn-edit"></th>
                     <th scope="row" id="btn-delete"></th>
                 </tr>
@@ -155,6 +156,18 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="list-inline-item px-3">
+                        <div class="dropdown">
+                            <button id="rating" class="btn dropdown-toggle btn-secondary"  type="button" data-bs-toggle="dropdown" aria-expanded="false">Rating:</button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"onclick="PrikaziRatingModal(this)">1</a></li>
+                                <li><a class="dropdown-item" href="#"onclick="PrikaziRatingModal(this)">2</a></li>
+                                <li><a class="dropdown-item" href="#"onclick="PrikaziRatingModal(this)">3</a></li>
+                                <li><a class="dropdown-item" href="#"onclick="PrikaziRatingModal(this)">4</a></li>
+                                <li><a class="dropdown-item" href="#"onclick="PrikaziRatingModal(this)">5</a></li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -198,7 +211,7 @@
         enableTime: true,
         minTime: "09:00",
         altInput: true,
-        dateFormat: "d.m.Y. H:i",
+        dateFormat: "Y-m-d H:i",
         altFormat: "F j, Y (H:i)"
     }
     flatpickr("input[type=datetime]",config) 
