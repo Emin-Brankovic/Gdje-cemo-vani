@@ -31,10 +31,11 @@ const UcitajMjesta=async()=>{
 const UcitajMail=(red)=>{
     let emailBody=document.getElementById("email-body");
     let podaci=red.children;
-    let email=`Gdje=${podaci[1].textContent},
-    Kategorija=${podaci[2].textContent},
-    Daljina=${podaci[3].textContent},
-    Koliko valja=${podaci[4].textContent}`;
+    let email=
+`Gdje=${podaci[1].textContent},
+Kategorija=${podaci[2].textContent},
+Daljina=${podaci[3].textContent},
+Koliko valja=${podaci[4].textContent}\n`;
     emailBody.value+=email;
 
 }
@@ -45,7 +46,7 @@ const DodajDatum=()=>{
         return
     else if(odabraniDatum===datum)
         return;
-    let tekst=`Kada: ${odabraniDatum}`;
+    let tekst=`Kada: ${odabraniDatum}\n`;
     let emailBody=document.getElementById("email-body");
     emailBody.value+=tekst;
     datum=odabraniDatum;
@@ -53,18 +54,18 @@ const DodajDatum=()=>{
 
 
 const DodajMjesto=async ()=>{
-    const rating=parseInt(document.getElementById("rating").textContent);
-    let nizRatinga=[rating];
-    console.log(nizRatinga);
     const daljina=document.querySelector(".daljina-modal");
     const kategorija=document.querySelector(".kategorija-modal");
     const naziv=document.querySelector(".input-naziva-modal").value;
-    console.log(naziv);
+    if(daljina.textContent=='Daljina' || kategorija.textContent=='Kategorija' || !naziv){
+        alert("Nisu svi podaci popunjeni za mjesto")
+        return;
+    }
     const mjestoToSave={
         naziv:naziv,
         kategorija:kategorija.textContent,
         daljina:daljina.textContent,
-        rating:nizRatinga
+        rating:0
     };
     const mjestoJSON = JSON.stringify(mjestoToSave);
     const url=`http://localhost:3001/mjesto/create`;
@@ -78,7 +79,6 @@ const DodajMjesto=async ()=>{
     try {
         const response=await fetch(url,config);
         const data=await response.json();
-        console.log(data);
     } catch (error) {
         console.log(error)
     }
@@ -287,6 +287,9 @@ const ValidacijaEmail=()=>{
     
     if(!gmailRegex.test(email.value)){
         email.style.backgroundColor=ErrorBackgroundColor ;
+        if(email.value.length == 0){
+           email.style.backgroundColor='white'
+       }
         return false;
     }
     else{
