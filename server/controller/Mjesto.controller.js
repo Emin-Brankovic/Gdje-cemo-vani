@@ -4,9 +4,6 @@ import Mjesto from "../model/Mjesto.model.js";
 export const getAllMjesta=async(req,res,next)=>
 {
     const {kategorija,daljina,}=req.query;
-    // if( typeof kategorija !=='undefined' || typeof daljina !=='undefined' ){
-    //     next();
-    // }
     if(kategorija.length!==0 || daljina.length!==0){
         next();
     }
