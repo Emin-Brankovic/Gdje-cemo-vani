@@ -18,7 +18,7 @@ const UcitajMjesta=async()=>{
             <td>${data[i].kategorija}</td>   
             <td>${data[i].daljina}</td>
             <td>${AverageRating(data[i].rating)}</td>
-            <td><button id="edit-button-${i+1}" type="button" class="btn edit-dugme" data-toggle="modal" data-target="#editModal" onclick="UcitajPodatkeZaEdit(this)">Edit</button></td>
+            <td><button id="edit-button-${i+1}" type="button" class="btn rate-dugme" data-toggle="modal" data-target="#modalRate" onclick="UcitajPodatkeZaEdit(this)">Rate</button></td>
             <td><button id="delete-button-${i+1}" type="button" class="btn delete-dugme"  data-toggle="modal" data-target=".provjera-brisanja-modal" onclick="SpremiPodatkeZaDelete(this)">Delete</button></td>
             </tr>
             `
@@ -92,6 +92,54 @@ const UcitajPodatkeZaEdit=async(dugme)=>{
     document.querySelector(".daljina-modal").textContent=data[redniBroj].daljina;
     document.querySelector(".kategorija-modal").textContent=data[redniBroj].kategorija;
     document.getElementById("rating").textContent='Rating';
+}
+
+const UcitajModalZaRate=(dugme)=>{
+    let td=document.getElementById(dugme.id).parentElement;
+    clickedRowData=td.parentElement;
+}
+
+const RateMjesto=async()=>{
+    let redniBroj=clickedRowData.children[0].innerHTML-1;
+    let mjesto=data[redniBroj];
+    let rating=parseInt(document.getElementById("rating").textContent);
+    let nizRatingaMjesta=mjesto.rating;
+    let emailBody=document.getElementById("email-body");
+    console.log(rating);
+    console.log(mjesto);
+    console.log(nizRatingaMjesta[0]);
+    if(nizRatingaMjesta[0]==0)
+        nizRatingaMjesta.pop();
+
+    nizRatingaMjesta.push(rating);
+
+    const mjestoZaRate={
+        _id:mjesto._id,
+        rating:nizRatingaMjesta
+    };
+    const url=`http://localhost:3001/mjesto/update`;
+    const config={
+        method:'PUT',
+        body: JSON.stringify(mjestoZaRate),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }
+    try {
+        const res=await fetch(url,config);
+        const responseData = await res.text();
+        console.log(responseData);
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+    clickedRowData=null;
+    closeModal();
+    emailBody.value=" ";
+
+
+
 }
 
 const closeModal=()=> {
@@ -210,7 +258,7 @@ const Pretrazi=async ()=>{
                 <td>${data[i].kategorija}</td>   
                 <td>${data[i].daljina}</td>
                 <td>${AverageRating(data[i].rating)}</td>
-                <td><button id="edit-button-${i+1}" type="button" class="btn edit-dugme" data-toggle="modal" data-target="#editModal" onclick="UcitajPodatkeZaEdit(this)">Edit</button></td>
+                <td><button id="edit-button-${i+1}" type="button" class="btn rate-dugme" data-toggle="modal" data-target="#modalRate" onclick="UcitajPodatkeZaEdit(this)">Rate</button></td>
                 <td><button id="delete-button-${i+1}" type="button" class="btn delete-dugme"  data-toggle="modal" data-target=".provjera-brisanja-modal" onclick="SpremiPodatkeZaDelete(this)">Delete</button></td>
             </tr>
             `
@@ -239,7 +287,7 @@ const PretraziPoNazivu=async (naziv)=>{
             <td>${data[i].kategorija}</td>   
             <td>${data[i].daljina}</td>
             <td>${AverageRating(data[i].rating)}</td>
-            <td><button id="edit-button-${i+1}" type="button" class="btn edit-dugme" data-toggle="modal" data-target="#editModal" onclick="UcitajPodatkeZaEdit(this)">Edit</button></td>
+            <td><button id="rate-button-${i+1}" type="button" class="btn rate-dugme" data-toggle="modal" data-target="#modalRate" onclick="UcitajPodatkeZaEdit(this)">Rate</button></td>
             <td><button id="delete-button-${i+1}" type="button" class="btn delete-dugme"  data-toggle="modal" data-target=".provjera-brisanja-modal" onclick="SpremiPodatkeZaDelete(this)">Delete</button></td>
             </tr>
             `

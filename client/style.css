@@ -3,7 +3,7 @@
     font-family:'Open Sans',sans-serif;
 }
 
-#btn-edit,#btn-delete
+#btn-rate,#btn-delete
 {
     width: 60px;
 }
@@ -50,10 +50,10 @@
 #tabela-mjesta{
     background-color: #CEDEBD;
 }
-.edit-dugme{
+.rate-dugme{
     background-color: #E8C872;
 }
-.edit-dugme:hover{
+.rate-dugme:hover{
     background-color: #E8C872;
 }
 .delete-dugme{

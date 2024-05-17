@@ -54,10 +54,11 @@ export const createMjesto=async(req,res)=>{
 }
 
 export const updateMjesto=async(req,res)=>{
-    const mjestoToSave=req.body;
-    const id=mjestoToSave._id;
+    const ratingMjesta=req.body;
+    const id=ratingMjesta._id;
+    const ratingNiz=ratingMjesta.rating;
     try {
-     const result=await Mjesto.updateOne({_id:id},mjestoToSave)
+     const result=await Mjesto.updateOne({_id:id},{rating:ratingNiz})
      res.status(200).send("Update mjesto");   
     } 
     catch (error) {
