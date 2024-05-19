@@ -1,3 +1,4 @@
+
 let data=[];
 let clickedRowData=null;
 let datum=null;
@@ -18,8 +19,25 @@ const UcitajMjesta=async()=>{
             <td>${data[i].kategorija}</td>   
             <td>${data[i].daljina}</td>
             <td>${AverageRating(data[i].rating)}</td>
-            <td><button id="edit-button-${i+1}" type="button" class="btn rate-dugme" data-toggle="modal" data-target="#modalRate" onclick="UcitajPodatkeZaEdit(this)">Rate</button></td>
-            <td><button id="delete-button-${i+1}" type="button" class="btn delete-dugme"  data-toggle="modal" data-target=".provjera-brisanja-modal" onclick="SpremiPodatkeZaDelete(this)">Delete</button></td>
+            <td>
+            <div class="dropdown">
+                <!-- Dropdown trigger button -->
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" onclick="ClearMailBody()">
+                </button>
+                <!-- Dropdown menu -->
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li>
+                    <button class="dropdown-item btn btn-danger" type="button" data-toggle="modal" data-target="#modalRate" id="rate-button-${i+1}" onclick="UcitajModalZaRate(this)">Rate</button>
+                  </li>
+                  <li>
+                    <button class="dropdown-item btn btn-light" type="button" data-toggle="modal" data-target="#editModal" id="edit-button-${i+1}" onclick="UcitajPodatkeZaEdit(this)">Edit</button>
+                  </li>
+                  <li>
+                    <button class="dropdown-item btn btn-light" type="button"  data-toggle="modal" data-target=".provjera-brisanja-modal" id="delete-button-${i+1}" onclick="SpremiPodatkeZaDelete(this)">Delete</button>
+                  </li>
+                </ul>
+              </div>
+        </td>
             </tr>
             `
         }
@@ -85,9 +103,9 @@ const DodajMjesto=async ()=>{
 }
 
 const UcitajPodatkeZaEdit=async(dugme)=>{
-    let td=document.getElementById(dugme.id).parentElement;
-    clickedRowData=td.parentElement;
-    let redniBroj=clickedRowData.children[0].innerHTML-1
+    let str = dugme.id;
+    let redniBroj=str.substring(str.lastIndexOf('-') + 1);
+    clickedRowData=str.substring(str.lastIndexOf('-') + 1);
     document.querySelector(".input-naziva-modal").value=data[redniBroj].naziv;
     document.querySelector(".daljina-modal").textContent=data[redniBroj].daljina;
     document.querySelector(".kategorija-modal").textContent=data[redniBroj].kategorija;
@@ -95,19 +113,24 @@ const UcitajPodatkeZaEdit=async(dugme)=>{
 }
 
 const UcitajModalZaRate=(dugme)=>{
-    let td=document.getElementById(dugme.id).parentElement;
-    clickedRowData=td.parentElement;
+    //let td=document.getElementById(dugme.id).parentElement;
+    let str = dugme.id;
+    clickedRowData=str.substring(str.lastIndexOf('-') + 1);
 }
 
 const RateMjesto=async()=>{
-    let redniBroj=clickedRowData.children[0].innerHTML-1;
+    let redniBroj=parseInt(clickedRowData)-1;
     let mjesto=data[redniBroj];
+    console.log(mjesto);
     let rating=parseInt(document.getElementById("rating").textContent);
     let nizRatingaMjesta=mjesto.rating;
     let emailBody=document.getElementById("email-body");
-    console.log(rating);
-    console.log(mjesto);
-    console.log(nizRatingaMjesta[0]);
+
+    if(isNaN(rating)){
+        alert("Rating se mora unijeti");
+        return;
+    }
+
     if(nizRatingaMjesta[0]==0)
         nizRatingaMjesta.pop();
 
@@ -158,7 +181,7 @@ const closeModal=()=> {
 
 
 const UpdateMjesto=async()=>{
-    let redniBroj=clickedRowData.children[0].innerHTML-1;
+    let redniBroj=parseInt(clickedRowData)-1;
     let mjesto=data[redniBroj];
     let nizRatingaMjesta=mjesto.rating;
     let emailBody=document.getElementById("email-body");
@@ -178,7 +201,6 @@ const UpdateMjesto=async()=>{
         daljina: daljina,
         rating:nizRatingaMjesta
     };
-    console.log(nizRatingaMjesta);
     const url=`http://localhost:3001/mjesto/update`;
     const config={
         method:'PUT',
@@ -203,9 +225,7 @@ const UpdateMjesto=async()=>{
 
 
 const DeleteMjesto=async ()=>{ 
-    let redniBroj=clickedRowData.children[0].innerHTML-1;
-    console.log(clickedRowData.children[0].innerHTML);
-    console.log(typeof data);
+    let redniBroj=parseInt(clickedRowData)-1;
     let IDMjesta=data[redniBroj]._id;
     let emailBody=document.getElementById("email-body");
 
@@ -234,8 +254,7 @@ const AverageRating=(niz)=>{
     let prosjek;
     for (let index = 0; index < niz.length; index++) {
         zbir += niz[index];
-    }
-    console.log(zbir);    
+    }  
     prosjek=zbir/ niz.length;
     return prosjek.toFixed(1);
 }
@@ -277,7 +296,6 @@ const PretraziPoNazivu=async (naziv)=>{
     try {
         result=await fetch(url);
         data=await result.json();
-        console.log(data);
         tabela.innerHTML=" ";
         for(let i=0;i<data.length;i++){
             tabela.innerHTML+=`
@@ -309,8 +327,10 @@ const Pretraga=()=>{
 
 
 const SpremiPodatkeZaDelete=(dugme)=>{
-    let td=document.getElementById(dugme.id).parentElement; 
-    clickedRowData=td.parentElement;
+    // let td=document.getElementById(dugme.id).parentElement; 
+    // clickedRowData=td.parentElement;
+    let str = dugme.id;
+    clickedRowData=str.substring(str.lastIndexOf('-') + 1);
 }
 
 const Spasi=()=>
@@ -344,4 +364,9 @@ const ValidacijaEmail=()=>{
         email.style.backgroundColor=OkBackgroundColor;
         return true;
     }
+}
+
+const ClearMailBody=()=>{
+    let emailBody=document.getElementById("email-body");
+    emailBody.value=" ";
 }

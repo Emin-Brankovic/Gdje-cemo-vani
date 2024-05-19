@@ -10,30 +10,28 @@
 .labele-filtera{
     font-weight: bolder;
 }
-#body{
+#container-tabele-podataka{
+    display: block;
+}
+body{
     /*background-color:#ABB6C8;*/
     background-color: #F5EFE6;
+    width: 100%;
+    height: 100vh;
 }
 
  #dropdown-list-container{
-    width: 1000px;
+    width: 100%;
     height: 100px;
     position: relative;
 } 
- /*#dropdown-menu-kategorija{
-    position: absolute; 
-    top: 50px;
-    left: 50px;
-    width: 1000px;
-    height: 100px;
-    background-color: #f0f0f0;
-    z-index: 2;
-} */
 
 #tabela-podataka{
     border-collapse: collapse; /* Ensure consistent border styling */
     border-radius: 10px; /* Adjust the value to change the roundness */
-    overflow: hidden; /* Clip the rounded corners */
+    /*overflow: hidden;  Clip the rounded corners */
+    width: 85%;
+    background-color:#E8DFCA;
 }
 
  #filteri{
@@ -48,7 +46,7 @@
 }
 
 #tabela-mjesta{
-    background-color: #CEDEBD;
+    background-color:#E8DFCA;
 }
 .rate-dugme{
     background-color: #E8C872;
@@ -62,3 +60,74 @@
 .delete-dugme:hover{
     background-color: #FA7070;
 }
+#button-container{
+    display: flex;
+    justify-content: end;
+    width: 92%;
+}
+#container-tabele-podataka{
+    margin-top: 35px;
+    display: flex;
+    justify-content: center !important;
+    align-items: center;
+    width: 100%;
+}
+
+td{
+    padding: 4px;
+    text-align: center;
+}
+@media (max-width: 575.98px) {
+    #dropdown-list-container{
+        width: 100%;
+        height: 100px;
+        /* position: relative; */
+    } 
+    #container-tabele-podataka{
+        margin-top: 35px;
+        display: flex;
+        justify-content: center !important;
+        align-items: center;
+    }
+    #tabela-podataka {
+        width: 100%;
+    }
+    #button-container{
+        width: 480px;
+    }
+    body{
+        width: 100%;
+        margin: 10px !important;
+        height: 100%;
+    }
+    #pretrazi-dugme,#naziv-filter{
+        width: 270px;
+    }
+    #dan-izlaska{
+        width: 100%;
+    }
+    #helper{
+        max-width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    td{
+        padding: 4px;
+        text-align: center;
+    }
+    th{
+        padding: 4px;
+        text-align: center;
+    }
+
+    #button-container{
+        display: flex;
+        justify-content: end;
+        width: 95%;
+    }
+    #container-mail{
+        width: 98%;
+
+    }
+
+  }
