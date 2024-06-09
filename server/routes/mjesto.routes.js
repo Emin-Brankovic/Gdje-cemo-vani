@@ -3,8 +3,9 @@ import {
   getAllMjesta,
   createMjesto,
   getMjestoByName,
-  updateMjesto,
+  RateMjesto,
   deleteMjesto,
+  updateMjesto,
 } from "../controller/Mjesto.controller.js";
 import {
   getByKategorijaDaljina,
@@ -22,7 +23,8 @@ router.get(
 );
 router.get("/:naziv", getMjestoByName);
 router.post("/create", createMjesto);
-router.put("/update", updateMjesto);
+router.put("/rate", RateMjesto);
+router.put("/update",updateMjesto)
 router.delete("/delete/:idMjesta",deleteMjesto)
 
 export default router;

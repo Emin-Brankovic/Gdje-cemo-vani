@@ -53,12 +53,24 @@ export const createMjesto=async(req,res)=>{
     }
 }
 
-export const updateMjesto=async(req,res)=>{
+export const RateMjesto=async(req,res)=>{
     const ratingMjesta=req.body;
     const id=ratingMjesta._id;
     const ratingNiz=ratingMjesta.rating;
     try {
      const result=await Mjesto.updateOne({_id:id},{rating:ratingNiz})
+     res.status(200).send("Update mjesto");   
+    } 
+    catch (error) {
+        res.status(500).send(error);
+    }
+}
+
+export const updateMjesto=async(req,res)=>{
+    const mjestoToSave=req.body;
+    const id=mjestoToSave._id;
+    try {
+     const result=await Mjesto.updateOne({_id:id},mjestoToSave)
      res.status(200).send("Update mjesto");   
     } 
     catch (error) {

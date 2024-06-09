@@ -26,5 +26,8 @@ app.listen(PORT,()=>{
     console.log(`Example app listening on port ${PORT}`);
 })
 
-mongoose.connect('mongodb://127.0.0.1:27017/Date-night-picker')
+
+
+ let db='mongodb://127.0.0.1:27017/Date-night-picker'
+mongoose.connect(db)
 .then(()=>{console.log("Connected!")});
