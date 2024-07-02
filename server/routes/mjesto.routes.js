@@ -1,25 +1,27 @@
 import express from "express";
 import {
-  getAllMjesta,
+  getMjesta,
   createMjesto,
   getMjestoByName,
   RateMjesto,
   deleteMjesto,
   updateMjesto,
 } from "../controller/Mjesto.controller.js";
-import {
-  getByKategorijaDaljina,
-  getByKategorij,
-  getByDaljina,
-} from "../middleware/filtracija.middleware.js";
+
+// import {
+//   getByKategorijaDaljina,
+//   getByKategorij,
+//   getByDaljina,
+// } from "../middleware/filtracija.middleware.js";
+
+import { paginatedResults } from "../middleware/pagination.js";
+
 const router = express.Router();
 
 router.get(
   "/",
-  getAllMjesta,
-  getByKategorijaDaljina,
-  getByKategorij,
-  getByDaljina
+  paginatedResults,
+  getMjesta
 );
 router.get("/:naziv", getMjestoByName);
 router.post("/create", createMjesto);

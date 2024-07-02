@@ -1,25 +1,30 @@
 import mongoose from "mongoose";
 import Mjesto from "../model/Mjesto.model.js";
 
-export const getAllMjesta=async(req,res,next)=>
-{
-    const {kategorija,daljina,}=req.query;
-    if(kategorija.length!==0 || daljina.length!==0){
-        next();
-    }
-    else{
+// export const getAllMjesta=async(req,res,next)=>
+// {
+//     const {kategorija,daljina,}=req.query;
+//     if(kategorija.length!==0 || daljina.length!==0){
+//         next();
+//     }
+//     else{
        
-        try {
-            let mjesto=[];
-            mjesto=await Mjesto.find()
-            res.send(mjesto);    
-        } 
-        catch (error) {
-            res.status(500).send("Nema mjesta");
-        }
-    }
+//         try {
+//             let mjesto=[];
+//             mjesto=await Mjesto.find()
+//             res.send(mjesto);    
+//         } 
+//         catch (error) {
+//             res.status(500).send("Nema mjesta");
+//         }
+//     }
     
-};
+// };
+
+export const getMjesta=async(req,res)=>
+{
+    res.send(res.paginatedResults)
+ };
 
 export const getMjestoByName=async(req,res)=>{
     const nazivMjesta=req.params.naziv;
