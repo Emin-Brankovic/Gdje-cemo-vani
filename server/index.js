@@ -2,6 +2,7 @@ import  express  from "express";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import mjestoRouter from "./routes/mjesto.routes.js";
+import naseljeRouter from "./routes/naselje.routes.js"
 const app=express();
 const PORT=3001;
 
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
 app.use('/mjesto',mjestoRouter);
+app.use('/naselje',naseljeRouter);
 
 app.get('/',(req,res)=>{
         res.send("Hello World!");
