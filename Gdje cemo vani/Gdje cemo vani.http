@@ -1,0 +1,6 @@
+@Gdje_cemo_vani_HostAddress = http://localhost:5069
+
+GET {{Gdje_cemo_vani_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,37 @@
+﻿@model List<HangoutSpotDto>
+
+<h3>HangoutSpots</h3>
+<br />
+<form method="get" asp-controller="HangoutSpots" asp-action="Index">
+	<div class="d-inline-flex p-2">
+		<input class="name-filter" type="text" name="name" placeholder="Hangout spot name" aria-label="Hangout spot name" />
+		<button type="submit" class="btn btn-primary p-2">Search</button>
+		@Html.DropDownList("Categories",ViewBag.Categories,"Select category",new{@class="form-control"})
+		@Html.DropDownList("TownParts", ViewBag.TownParts, "Select town part", new { @class = "form-control" })
+	</div>
+</form>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<td>Name</td>
+			<td>Town part</td>
+			<td>Category</td>
+			<td></td>
+			<td></td>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var hg in Model)
+		{
+			<tr>
+				<td>@hg.Name</td>
+				<td>@hg.TownPart</td>
+				<td>@hg.Category</td>
+				<td><a class="btn btn-link">Edit</a></td>
+				<td><a class="btn btn-link">Delete</a></td>
+			</tr>	
+		}
+	</tbody>
+</table>
+
+<a class="btn btn-primary" asp-controller="HangoutSpots" asp-action="CreateHangoutSpot">Create</a>
