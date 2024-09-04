@@ -7,5 +7,6 @@ namespace WebAppGdjeCemoVani.Data
 		Task<T?> InvokeGetByName<T>(string relativeUrl);
 		Task<T?> InvokeGetCategories<T>(string relativeUrl);
 		Task<T?> InvokeGetTownParts<T>(string relativeUrl);
+		Task<T?> InvokePost<T>(string relativeUrl, T obj);
 	}
 }

@@ -17,24 +17,24 @@
 	</div>
 	<div class="mb-3 row">
 		<div class="col-2">
-			<label asp-for="Category" class="col-form-label"></label>
+			<label asp-for="CategoryId" class="col-form-label"></label>
 		</div>
 		<div class="col-6">
-			<input type="text" asp-for="Category" class="form-control" />
+			<select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
 		</div>
 		<div class="col">
-			<span class="text-danger" asp-validation-for="Category"></span>
+			<span class="text-danger" asp-validation-for="CategoryId"></span>
 		</div>
 	</div>
 	<div class="mb-3 row">
 		<div class="col-2">
-			<label asp-for="TownPart" class="col-form-label"></label>
+			<label asp-for="TownPartId" class="col-form-label"></label>
 		</div>
 		<div class="col-6">
-			<input type="text" asp-for="TownPart" class="form-control" />
+			<select asp-for="TownPartId" asp-items="ViewBag.TownParts" class="form-control"></select>
 		</div>
 		<div class="col">
-			<span class="text-danger" asp-validation-for="TownPart"></span>
+			<span class="text-danger" asp-validation-for="TownPartId"></span>
 		</div>
 	</div>
 	<div class="mb-3 row">

@@ -8,6 +8,8 @@ namespace WebAppGdjeCemoVani.Controllers
 	public class HangoutSpotsController : Controller
 	{
 		private readonly IWebApiExecuter webApiExecuter;
+		private List<Category>? categories;
+		private List<TownPart>? townParts;
 
 		public HangoutSpotsController(IWebApiExecuter webApiExecuter)
         {
@@ -15,10 +17,10 @@ namespace WebAppGdjeCemoVani.Controllers
 		}
 		public async Task<IActionResult> Index(string name,string Categories, string TownParts)
 		{
-			var categories = await webApiExecuter.InvokeGetCategories<List<Category>>("/Categories");
-			var townParts = await webApiExecuter.InvokeGetTownParts<List<TownPart>>("/TownPart");
+			categories = await webApiExecuter.InvokeGetCategories<List<Category>>("/Categories");
+			townParts = await webApiExecuter.InvokeGetTownParts<List<TownPart>>("/TownPart");
 
-			ViewBag.Categories =new SelectList(categories);
+			ViewBag.Categories = new SelectList(categories);
 			ViewBag.TownParts = new SelectList(townParts);
 
 			if (string.IsNullOrEmpty(name))
@@ -29,15 +31,31 @@ namespace WebAppGdjeCemoVani.Controllers
 				return View(await webApiExecuter.InvokeGet<List<HangoutSpotDto>>($"/HangoutSpot/{name}"));
 		}
 
-		public IActionResult CreateHangoutSpot()
+		public async Task<IActionResult> CreateHangoutSpot()
 		{
+			categories = await webApiExecuter.InvokeGetCategories<List<Category>>("/Categories");
+			townParts = await webApiExecuter.InvokeGetTownParts<List<TownPart>>("/TownPart");
+
+			ViewBag.Categories = new SelectList(categories, "CategoryId","Name");
+			ViewBag.TownParts = new SelectList(townParts, "TownPartId","Name");
 			return View();
 		}
 		//Dovrsiti funkciju kao i takodjer dodati u httclientexecuter klasu metodu za post
 		[HttpPost]
-		public IActionResult CreateHangoutSpot(HangoutSpot hangoutSpot)
+		public async Task<IActionResult> CreateHangoutSpot(HangoutSpot hangoutSpot)
 		{
-			return View();
+			var response = await webApiExecuter.InvokePost<HangoutSpot>("/HangoutSpot/create", hangoutSpot);
+			if (response != null)
+				return RedirectToAction(nameof(Index));
+
+			return View(hangoutSpot);
 		}
+
+		private async void PopulateDropdownLists()
+		{
+			categories = await webApiExecuter.InvokeGetCategories<List<Category>>("/Categories");
+			townParts = await webApiExecuter.InvokeGetTownParts<List<TownPart>>("/TownPart");
+		}
+
 	}
 }

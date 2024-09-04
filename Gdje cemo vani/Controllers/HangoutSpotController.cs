@@ -37,7 +37,7 @@ namespace Gdje_cemo_vani.Controllers
 		}
 
 		[HttpPost]
-		[Route("/create")]
+		[Route("create")]
 		[TypeFilter(typeof(HangoutSpot_ValidateCreateHangoutSpotFilterAttribute))]
 		public IActionResult CreateHangoutSpot([FromBody] HangoutSpot hangoutSpot)
 		{

@@ -1,4 +1,6 @@
-﻿namespace WebAppGdjeCemoVani.Data
+﻿using WebAppGdjeCemoVani.Models;
+
+namespace WebAppGdjeCemoVani.Data
 {
 	public class WebApiExecuter : IWebApiExecuter
 	{
@@ -31,6 +33,15 @@
 		{
 			var httpClinet = httpClientFactory.CreateClient(ApiName);
 			return await httpClinet.GetFromJsonAsync<T>(relativeUrl);
+		}
+
+		public async Task<T?> InvokePost<T>(string relativeUrl,T obj)
+		{
+			var httpClient=httpClientFactory.CreateClient(ApiName);
+			var response= await httpClient.PostAsJsonAsync(relativeUrl,obj);
+			response.EnsureSuccessStatusCode();
+
+			return await response.Content.ReadFromJsonAsync<T>();
 		}
 	}
 }
