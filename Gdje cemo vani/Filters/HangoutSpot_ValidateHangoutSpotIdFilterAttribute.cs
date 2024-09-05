@@ -1,6 +1,8 @@
 ﻿using Gdje_cemo_vani.Data;
+using Gdje_cemo_vani.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 
 namespace Gdje_cemo_vani.Filters
 {
@@ -30,8 +32,13 @@ namespace Gdje_cemo_vani.Filters
 				}
 				else
 				{
-					var hangoutSpot = db.HangoutSpots.Find(id);
-					if(hangoutSpot == null) 
+					var hangoutSpot = db.HangoutSpots
+						.Include(hg => hg.TownPart)
+						.Include(hg => hg.Category)
+						.Where(hg => hg.HangoutSpotId == id)
+						.FirstOrDefault();
+
+					if (hangoutSpot == null) 
 					{
 						context.ModelState.AddModelError("HangoutspotId", "HangoutspotId does not exist");
 						var problemDetail = new ValidationProblemDetails(context.ModelState)

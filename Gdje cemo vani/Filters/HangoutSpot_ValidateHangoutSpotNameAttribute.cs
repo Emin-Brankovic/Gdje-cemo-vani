@@ -45,7 +45,8 @@ namespace Gdje_cemo_vani.Filters
 				})
 				.ToList();
 
-                if(hangoutSpot == null) 
+
+				if (hangoutSpot == null) 
                 {
 					context.ModelState.AddModelError("Hangout spot name", $"The hangout spot with the given name:({hangoutspotName}) does not exist");
 					var problemDetail = new ValidationProblemDetails(context.ModelState)

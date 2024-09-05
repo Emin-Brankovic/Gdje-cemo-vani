@@ -27,7 +27,7 @@
 				<td>@hg.Name</td>
 				<td>@hg.TownPart</td>
 				<td>@hg.Category</td>
-				<td><a class="btn btn-link">Edit</a></td>
+				<td><a class="btn btn-link" asp-controller="HangoutSpots" asp-action="UpdateHangoutSpot" asp-route-hangoutspotId="@hg.HangoutSpotId">Edit</a></td>
 				<td><a class="btn btn-link">Delete</a></td>
 			</tr>	
 		}

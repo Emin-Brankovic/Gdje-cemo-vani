@@ -28,6 +28,24 @@ namespace Gdje_cemo_vani.Controllers
 			return Ok(result);
 		}
 
+		[HttpGet("get/{id}")]
+		[TypeFilter(typeof(HangoutSpot_ValidateHangoutSpotIdFilterAttribute))]
+		public IActionResult GetHangoutSpotById(int id)
+		{
+			var hangoutSpot = HttpContext.Items["hangoutSpot"] as HangoutSpot;
+			var hangoutSpotDto=new HangoutSpotDto() 
+			{
+				HangoutSpotId = hangoutSpot.HangoutSpotId,
+				Name = hangoutSpot.Name,
+				TownPart = hangoutSpot.TownPart.Name,
+				TownPartId = hangoutSpot.TownPartId,
+				Category = hangoutSpot.Category.Name,
+				CategoryId = hangoutSpot.CategoryId
+			};
+
+			return Ok(hangoutSpotDto);
+		}
+
 		[HttpGet("{name}")]
 		[TypeFilter(typeof(HangoutSpot_ValidateHangoutSpotNameAttribute))]
 		public IActionResult GetHangoutSpotByName([FromRoute] string name)
@@ -54,8 +72,8 @@ namespace Gdje_cemo_vani.Controllers
 		{
 			var hangoutSpotToUpdate = HttpContext.Items["hangoutSpot"] as HangoutSpot;
 
-			var categoryId = GetTownPartByIdHelper(hangoutSpotDto);
-			var townPartId = GetCategoryIdHelper(hangoutSpotDto);
+			var categoryId = GetCategoryIdHelper(hangoutSpotDto);
+			var townPartId = GetTownPartByIdHelper(hangoutSpotDto);
 
 
 			hangoutSpotToUpdate.TownPartId = hangoutSpotDto.TownPartId;
@@ -81,14 +99,14 @@ namespace Gdje_cemo_vani.Controllers
 			return Ok(hangoutSpot);
 		}
 
-		private int GetTownPartByIdHelper(HangoutSpotDto hangoutSpotDto)
-		{
-			return db.Categories
-			.Where(c => c.Name.ToLower() == hangoutSpotDto.Category.ToLower()).Select(c => c.CategoryId).First();
-		}
 		private int GetCategoryIdHelper(HangoutSpotDto hangoutSpotDto)
 		{
-			return db.TownParts.Where(t => t.Name.ToLower() == hangoutSpotDto.TownPart.ToLower())
+			return db.Categories
+			.Where(c => c.CategoryId == hangoutSpotDto.CategoryId).Select(c => c.CategoryId).First();
+		}
+		private int GetTownPartByIdHelper(HangoutSpotDto hangoutSpotDto)
+		{
+			return db.TownParts.Where(t => t.TownPartId == hangoutSpotDto.TownPartId)
 			.Select(t => t.TownPartId).First();
 		}
 	}
