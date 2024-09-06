@@ -56,6 +56,14 @@ namespace WebAppGdjeCemoVani.Data
 
 		}
 
+		public async Task InvokeDelete(string relativeUrl)
+		{
+			var httpClient = httpClientFactory.CreateClient(ApiName);
+			var response = await httpClient.DeleteAsync(relativeUrl);
+			await HandlePotentialError(response);
+		}
+
+
 		private async Task HandlePotentialError(HttpResponseMessage response)
 		{
 			if (!response.IsSuccessStatusCode)
