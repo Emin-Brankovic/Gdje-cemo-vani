@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
 using System.Xml.Linq;
@@ -17,12 +18,24 @@ namespace WebAppGdjeCemoVani.Controllers
         {
 			this.webApiExecuter = webApiExecuter;
 		}
+
+
+		public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+		{
+			if (categories == null || townParts == null)
+			{
+				categories = await webApiExecuter.InvokeGetCategories<List<Category>>("/Categories");
+				townParts = await webApiExecuter.InvokeGetTownParts<List<TownPart>>("/TownPart");
+			}
+
+			await next();
+		}
+
 		public async Task<IActionResult> Index(string? name,string? Categories, string? TownParts)
 		{
+			List<HangoutSpotDto> result;
+			List<IndexViewModel> IndexView;
 			
-			categories = await webApiExecuter.InvokeGetCategories<List<Category>>("/Categories");
-			townParts = await webApiExecuter.InvokeGetTownParts<List<TownPart>>("/TownPart");
-
 			ViewBag.Categories = new SelectList(categories);
 			ViewBag.TownParts = new SelectList(townParts);
 
@@ -32,10 +45,12 @@ namespace WebAppGdjeCemoVani.Controllers
 				{
 					if (string.IsNullOrEmpty(name))
 					{
-						return View(await webApiExecuter.InvokeGet<List<HangoutSpotDto>>($"/HangoutSpot?category={Categories}&townpart={TownParts}"));
+                        return View(await webApiExecuter.InvokeGet<List<HangoutSpotDto>>($"/HangoutSpot?category={Categories}&townpart={TownParts}"));
 					}
 					else
+					{
 						return View(await webApiExecuter.InvokeGet<List<HangoutSpotDto>>($"/HangoutSpot/{name}"));
+					}
 
 				}
 				catch (WepApiException ex)
@@ -43,17 +58,14 @@ namespace WebAppGdjeCemoVani.Controllers
 					HandleWebApiException(ex);
 				}
 			}
-
 			return View(await webApiExecuter.InvokeGet<List<HangoutSpotDto>>($"/HangoutSpot"));
 		}
 
-		public async Task<IActionResult> CreateHangoutSpot()
+		public IActionResult CreateHangoutSpot()
 		{
-			categories = await webApiExecuter.InvokeGetCategories<List<Category>>("/Categories");
-			townParts = await webApiExecuter.InvokeGetTownParts<List<TownPart>>("/TownPart");
-
 			ViewBag.Categories = new SelectList(categories, "CategoryId","Name");
 			ViewBag.TownParts = new SelectList(townParts, "TownPartId","Name");
+
 			return View();
 		}
 
@@ -74,9 +86,6 @@ namespace WebAppGdjeCemoVani.Controllers
 				}
 			}
 
-			categories = await webApiExecuter.InvokeGetCategories<List<Category>>("/Categories");
-			townParts = await webApiExecuter.InvokeGetTownParts<List<TownPart>>("/TownPart");
-
 			ViewBag.Categories = new SelectList(categories, "CategoryId", "Name");
 			ViewBag.TownParts = new SelectList(townParts, "TownPartId", "Name");
 
@@ -85,9 +94,6 @@ namespace WebAppGdjeCemoVani.Controllers
 
 		public async Task<IActionResult> UpdateHangoutSpot(int hangoutspotId)
 		{
-			categories = await webApiExecuter.InvokeGetCategories<List<Category>>("/Categories");
-			townParts = await webApiExecuter.InvokeGetTownParts<List<TownPart>>("/TownPart");
-
 			ViewBag.Categories = new SelectList(categories, "CategoryId", "Name");
 			ViewBag.TownParts = new SelectList(townParts, "TownPartId", "Name");
 
@@ -112,8 +118,6 @@ namespace WebAppGdjeCemoVani.Controllers
 					HandleWebApiException(ex);
 				}
 			}
-			categories = await webApiExecuter.InvokeGetCategories<List<Category>>("/Categories");
-			townParts = await webApiExecuter.InvokeGetTownParts<List<TownPart>>("/TownPart");
 
 			ViewBag.Categories = new SelectList(categories, "CategoryId", "Name");
 			ViewBag.TownParts = new SelectList(townParts, "TownPartId", "Name");

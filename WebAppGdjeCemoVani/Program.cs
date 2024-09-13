@@ -11,6 +11,7 @@ builder.Services.AddHttpClient("HangoutSpotsApi", client =>
 });
 
 builder.Services.AddTransient<IWebApiExecuter, WebApiExecuter>();
+builder.Services.AddTransient<IMailSender, MailSender>();
 
 var app = builder.Build();
 
@@ -31,6 +32,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
 	name: "default",
-	pattern: "{controller=Home}/{action=Index}/{id?}");
+	pattern: "{controller=HangoutSpots}/{action=Index}/{id?}");
 
 app.Run();

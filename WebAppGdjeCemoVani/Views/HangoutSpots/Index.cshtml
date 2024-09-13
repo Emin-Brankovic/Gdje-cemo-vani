@@ -20,6 +20,7 @@
 			<td>Category</td>
 			<td></td>
 			<td></td>
+			<td></td>
 		</tr>
 	</thead>
 	<tbody>
@@ -29,6 +30,7 @@
 				<td>@hg.Name</td>
 				<td>@hg.TownPart</td>
 				<td>@hg.Category</td>
+				<td><a class="btn btn-link" asp-controller="Mail" asp-action="CreateEmail" asp-route-hangoutspotId="@hg.HangoutSpotId">Select</a></td>
 				<td><a class="btn btn-link" asp-controller="HangoutSpots" asp-action="UpdateHangoutSpot" asp-route-hangoutspotId="@hg.HangoutSpotId">Edit</a></td>
 				<td><a class="btn btn-link" asp-controller="HangoutSpots" asp-action="DeleteHangoutSpot" asp-route-hangoutspotId="@hg.HangoutSpotId">Delete</a></td>
 			</tr>	
@@ -37,3 +39,5 @@
 </table>
 
 <a class="btn btn-primary" asp-controller="HangoutSpots" asp-action="CreateHangoutSpot">Create</a>
+
+

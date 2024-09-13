@@ -1,0 +1,32 @@
+﻿@model EmailView
+
+<h3>Email</h3>
+<br />
+<form method="post" asp-controller="Mail" asp-action="SendEmail">
+	<div class="text-danger" asp-validation-summary=ModelOnly></div>
+	<div>
+		<div class="input-group">
+			<span class="input-group-text">Date:</span>
+			<input type="datetime-local" class="form-control" asp-for="MeetingTime" />
+		</div>
+		<div class="input-group">
+			<span class="input-group-text">From:</span>
+			<input type="text" class="form-control" asp-for="From" placeholder="Enter sender name" />
+		</div>
+
+		<div class="input-group">
+			<span class="input-group-text">To:</span>
+			<input type="text" class="form-control" asp-for="To" placeholder="Enter reciever email" />
+		</div>
+
+		<div class="input-group">
+			<span class="input-group-text"></span>
+			<textarea class="form-control" asp-for="Message"></textarea>
+		</div>
+	</div>
+	<div class="mb-3 row">
+		<div class="col-2">
+			<input type="submit" class="btn btn-primary" value="Send" />
+		</div>
+	</div>
+</form>
