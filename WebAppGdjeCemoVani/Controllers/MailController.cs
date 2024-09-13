@@ -36,13 +36,17 @@ namespace WebAppGdjeCemoVani.Controllers
 		[HttpPost]
 		public async Task<IActionResult> SendEmail(EmailView email)
 		{
-			var receiver = email.To;
-			var subject = "Vanka?";
-			var message = email.Message+$"When:{email.MeetingTime.ToString()}\n"+$"From:{email.From}";
+			if(ModelState.IsValid)
+			{
+				var receiver = email.To;
+				var subject = "Vanka?";
+				var message = email.Message+$"When:{email.MeetingTime.ToString()}\n"+$"From:{email.From}";
 
-			await emailSender.SendEmailAsync(receiver, subject, message);
+				await emailSender.SendEmailAsync(receiver, subject, message);
 
-			return View();
+				return View();
+			}
+			return RedirectToAction(nameof(CreateEmail));
 		}
 	}
 }

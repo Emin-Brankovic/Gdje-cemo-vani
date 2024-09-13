@@ -13,12 +13,16 @@
 			<span class="input-group-text">From:</span>
 			<input type="text" class="form-control" asp-for="From" placeholder="Enter sender name" />
 		</div>
-
+		<div class="col">
+			<span class="text-danger" asp-validation-for="From"></span>
+		</div>
 		<div class="input-group">
 			<span class="input-group-text">To:</span>
 			<input type="text" class="form-control" asp-for="To" placeholder="Enter reciever email" />
 		</div>
-
+		<div class="col">
+			<span class="text-danger" asp-validation-for="To"></span>
+		</div>
 		<div class="input-group">
 			<span class="input-group-text"></span>
 			<textarea class="form-control" asp-for="Message"></textarea>
@@ -30,3 +34,8 @@
 		</div>
 	</div>
 </form>
+@section Scripts {
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.6.0.min.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.19.3/jquery.validate.min.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}
