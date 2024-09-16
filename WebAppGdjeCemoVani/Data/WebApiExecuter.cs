@@ -21,8 +21,10 @@ namespace WebAppGdjeCemoVani.Data
 			var request=new HttpRequestMessage(HttpMethod.Get, relativeUrl);
 			var response=await httpClinet.SendAsync(request);
 			await HandlePotentialError(response);
+			var content = await response.Content.ReadAsStringAsync();
+            await Console.Out.WriteLineAsync(content);
 
-			return await response.Content.ReadFromJsonAsync<T>();
+            return await response.Content.ReadFromJsonAsync<T>(); 
 		}
 
 		public async Task<T?> InvokeGetCategories<T>(string relativeUrl)

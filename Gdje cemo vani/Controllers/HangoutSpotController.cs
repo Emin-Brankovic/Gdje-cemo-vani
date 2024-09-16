@@ -5,27 +5,30 @@ using Gdje_cemo_vani.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using System.Collections.Generic;
 
 namespace Gdje_cemo_vani.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
-	public class HangoutSpotController:ControllerBase
+	public class HangoutSpotController : ControllerBase
 	{
 		private readonly GdjeCemoVaniDbContext db;
 
 		public HangoutSpotController(GdjeCemoVaniDbContext db)
-        {
+		{
 			this.db = db;
 		}
 
 		[HttpGet]
 		[TypeFilter(typeof(HangoutSpot_ValidateQueryParametersAttribute))]
-		public IActionResult GetHangoutSpots([FromQuery] string? category = "", [FromQuery] string? townpart="")
+		public IActionResult GetHangoutSpots(int pageNumber,[FromQuery] string? category = "", [FromQuery] string? townpart="")
 		{
+			if(pageNumber<1)pageNumber=1;
 			var result = HttpContext.Items["hangoutspots"] as List<HangoutSpotDto>;
+			var paginatedResult = PaginatedList<HangoutSpotDto>.Create(result, pageNumber, 5);
 
-			return Ok(result);
+			return Ok(paginatedResult);
 		}
 
 		[HttpGet("get/{id}")]
@@ -48,10 +51,12 @@ namespace Gdje_cemo_vani.Controllers
 
 		[HttpGet("{name}")]
 		[TypeFilter(typeof(HangoutSpot_ValidateHangoutSpotNameAttribute))]
-		public IActionResult GetHangoutSpotByName([FromRoute] string name)
+		public IActionResult GetHangoutSpotByName([FromRoute] string name, [FromRoute] int pageNumber = 1)
 		{
 			var result = HttpContext.Items["hangoutspot"] as List<HangoutSpotDto>;
-			return Ok(result);
+			var paginatedResult = PaginatedList<HangoutSpotDto>.Create(result, pageNumber, 5);
+
+			return Ok(paginatedResult);
 		}
 
 		[HttpPost]

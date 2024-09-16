@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace WebAppGdjeCemoVani.Controllers
 			await next();
 		}
 
-		public async Task<IActionResult> Index(string? name,string? Categories, string? TownParts)
+		public async Task<IActionResult> Index(string? name,string? Categories, string? TownParts,int pageNumber)
 		{
 			List<HangoutSpotDto> result;
 			List<IndexViewModel> IndexView;
@@ -45,11 +46,11 @@ namespace WebAppGdjeCemoVani.Controllers
 				{
 					if (string.IsNullOrEmpty(name))
 					{
-                        return View(await webApiExecuter.InvokeGet<List<HangoutSpotDto>>($"/HangoutSpot?category={Categories}&townpart={TownParts}"));
+                        return View(await webApiExecuter.InvokeGet<PaginatedList<HangoutSpotDto>>($"/HangoutSpot?pageNumber={pageNumber}&category={Categories}&townpart={TownParts}"));
 					}
 					else
 					{
-						return View(await webApiExecuter.InvokeGet<List<HangoutSpotDto>>($"/HangoutSpot/{name}"));
+						return View(await webApiExecuter.InvokeGet<PaginatedList<HangoutSpotDto>>($"/HangoutSpot/{name}"));
 					}
 
 				}
@@ -58,7 +59,7 @@ namespace WebAppGdjeCemoVani.Controllers
 					HandleWebApiException(ex);
 				}
 			}
-			return View(await webApiExecuter.InvokeGet<List<HangoutSpotDto>>($"/HangoutSpot"));
+			return View(await webApiExecuter.InvokeGet<PaginatedList<HangoutSpotDto>>($"/HangoutSpot?pageNumber={pageNumber}"));
 		}
 
 		public IActionResult CreateHangoutSpot()
